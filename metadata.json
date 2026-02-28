@@ -1,0 +1,5 @@
+{
+  "name": "CineMatch AI",
+  "description": "A smart recommendation engine for movies, series, and anime based on your viewing history using Gemini 2.5 Flash.",
+  "requestFramePermissions": []
+}

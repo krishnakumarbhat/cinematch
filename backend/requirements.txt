@@ -1,0 +1,8 @@
+Flask==3.1.1
+flask-cors==6.0.1
+numpy==2.1.2
+scikit-learn==1.5.2
+langgraph==0.2.35
+llama-index==0.11.17
+llama-index-vector-stores-chroma==0.2.0
+chromadb==0.5.7
