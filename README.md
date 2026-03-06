@@ -1,50 +1,126 @@
-# CineMatch AI
+# CineMatch AI 🎬🍿
 
-Movie/series/anime recommendation demo using multiple recommendation approaches.
+[![CI](https://github.com/krishnakumarbhat/cinematch/actions/workflows/ci.yml/badge.svg)](https://github.com/krishnakumarbhat/cinematch/actions/workflows/ci.yml)
+[![React](https://img.shields.io/badge/React-18+-61DAFB.svg)](https://react.dev)
+[![Flask](https://img.shields.io/badge/Flask-3.0+-green.svg)](https://flask.palletsprojects.com/)
 
-## Includes
+A **movie, series, and anime recommendation** app using multiple AI recommendation strategies. Features a React + Vite frontend with animated UI and a Flask API backend powered by LangGraph orchestration and ChromaDB vector search.
 
-- React + Vite frontend
-- Flask backend API
-- SQLite login/auth
-- Content-Based, Collaborative, Hybrid, and Sequential recommendations
-- LangGraph orchestration
-- LlamaIndex + ChromaDB retrieval context
-- Runtime animation before recommendations are displayed
-- Animated dummy knowledge output cards for methods/strengths/weaknesses
+## 🏗️ Architecture
 
-## Project Structure
+```mermaid
+flowchart TD
+    subgraph Frontend["React + Vite Frontend"]
+        UI[User Interface]
+        ANIM[Animated Cards]
+        SEARCH[Search / Preferences]
+    end
 
-- `app.py` main Flask entry point (root-level)
-- `backend/` data, recommenders, SQLite helpers, requirements
-- `App.tsx`, `components/`, `services/` frontend app
+    subgraph Backend["Flask API Backend"]
+        AUTH[SQLite Auth]
+        ROUTER[API Router]
+    end
 
-## Run Backend
+    subgraph Recommenders["Recommendation Engine"]
+        CB[Content-Based\nTF-IDF / Features]
+        CF[Collaborative\nUser-Item Matrix]
+        HY[Hybrid\nWeighted Ensemble]
+        SEQ[Sequential\nWatch History]
+    end
 
-Prerequisites: Python 3.10+
+    subgraph AI["AI Layer"]
+        LG[LangGraph\nOrchestration]
+        LI[LlamaIndex\nRetrieval]
+        CHROMA[ChromaDB\nVector Store]
+    end
 
-1. `cd backend`
-2. `python3 -m venv .venv`
-3. `source .venv/bin/activate`
-4. `pip install -r requirements.txt`
-5. `cd ..`
-6. `python3 app.py`
+    Frontend -->|API Calls| Backend
+    ROUTER --> Recommenders
+    Recommenders --> AI
+    LI --> CHROMA
+    LG --> LI
+    AUTH -->|Login/Register| UI
+```
+
+## 🚀 Features
+
+- **4 Recommendation Approaches**: Content-Based, Collaborative, Hybrid, Sequential
+- **LangGraph Orchestration**: AI pipeline for intelligent ranking
+- **ChromaDB Retrieval**: Semantic search through movie metadata
+- **Animated UI**: Runtime animations and animated knowledge output cards
+- **SQLite Auth**: Registration and login system
+
+## 🛠️ Tech Stack
+
+| Layer           | Technology                              |
+| --------------- | --------------------------------------- |
+| Frontend        | React 18, TypeScript, Vite              |
+| Backend         | Flask, Python 3.10+                     |
+| Auth            | SQLite                                  |
+| AI Pipeline     | LangGraph, LlamaIndex, ChromaDB         |
+| Recommendations | TF-IDF, Collaborative Filtering, Hybrid |
+
+## 📦 Setup
+
+### Backend
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cd ..
+python3 app.py
+```
 
 Backend URL: `http://localhost:5002`
 
-When `dist/` exists (after `npm run build`), opening `http://localhost:5002` serves the frontend.
+### Frontend
 
-## Run Frontend
+```bash
+npm install
+# Optional: echo "VITE_API_BASE_URL=http://localhost:5002" > .env.local
+npm run dev
+```
 
-Prerequisites: Node.js 18+
+Frontend URL: `http://localhost:3000`
 
-1. `npm install`
-2. Optional `.env.local`: `VITE_API_BASE_URL=http://localhost:5002`
-3. `npm run dev`
+### Production Build
 
-Frontend URL (dev mode): `http://localhost:3000`
+```bash
+npm run build
+# Open http://localhost:5002 — Flask serves the built frontend
+```
 
-## SQLite Browser AppImage (Linux)
+## 📁 Project Structure
 
-1. `chmod +x DB.Browser.for.SQLite-v3.13.1-x86.64-v2.AppImage`
-2. `./DB.Browser.for.SQLite-v3.13.1-x86.64-v2.AppImage`
+```
+cinematch/
+├── app.py                 # Flask entry point
+├── App.tsx                # React root component
+├── backend/
+│   ├── data/              # Movie/anime datasets
+│   ├── recommenders/      # Recommendation algorithms
+│   ├── database.py        # SQLite helpers
+│   └── requirements.txt
+├── components/            # React UI components
+├── services/              # API service layer
+├── types.ts               # TypeScript types
+├── index.html
+├── vite.config.ts
+├── .github/workflows/     # CI/CD pipeline
+├── .gitignore
+└── README.md
+```
+
+## 📝 License
+
+MIT License
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit your changes: `git commit -m 'Add feature'`
+4. Push to the branch: `git push origin feature-name`
+5. Open a pull request
