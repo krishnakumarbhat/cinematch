@@ -1,0 +1,12 @@
+{
+  "name": "cinematch-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "serve -s ../cinematch_mobile/dist -l 3000 --no-clipboard",
+    "build": "cd ../cinematch_mobile && npx expo export --platform web"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
