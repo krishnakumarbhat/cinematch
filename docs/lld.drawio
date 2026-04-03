@@ -1,0 +1,80 @@
+<mxfile host="app.diagrams.net" modified="2026-04-01T00:00:00.000Z" agent="CineMatch" version="24.0.0" type="device">
+  <diagram id="lld" name="Low-Level Design">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 00_main.py -->
+        <mxCell id="f0" value="00_main.py" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- 01_AppFactory.py -->
+        <mxCell id="f1" value="01_AppFactory.py&#xa;─────────────&#xa;+ create_app() → Flask" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="220" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ef01" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="f0" target="f1" parent="1"/>
+
+        <!-- 02_Routes.py -->
+        <mxCell id="f2" value="02_Routes.py&#xa;─────────────&#xa;+ register_routes(app, db)&#xa;  GET  /api/health&#xa;  POST /api/auth/register&#xa;  POST /api/auth/login&#xa;  POST /api/recommend" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="60" y="270" width="220" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="ef12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="f1" target="f2" parent="1"/>
+
+        <!-- 03_AuthMiddleware.py -->
+        <mxCell id="f3" value="03_AuthMiddleware.py&#xa;─────────────&#xa;+ extract_bearer_token(req) → str|None&#xa;+ resolve_user(req, db) → dict" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="260" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="ef23" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="f2" target="f3" parent="1"/>
+
+        <!-- Database.py -->
+        <mxCell id="fdb" value="models/Database.py  «Singleton»&#xa;─────────────&#xa;- _instance: Database&#xa;- _initialized: bool&#xa;─────────────&#xa;+ init()&#xa;+ register_user(username, password) → dict&#xa;+ login_user(username, password) → dict&#xa;+ get_user_by_token(token) → dict|None&#xa;+ log_recommendation(user_id, titles)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="370" y="40" width="310" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- MovieDataset.py -->
+        <mxCell id="fmd" value="data/MovieDataset.py&#xa;─────────────&#xa;+ MOVIES: List[dict]  (18 items)&#xa;+ USER_INTERACTIONS: Dict[str, List[int]]&#xa;+ USER_SEQUENCES: List[List[int]]&#xa;─────────────&#xa;+ get_movie_map() → Dict[int, dict]&#xa;+ get_title_index() → Dict[str, dict]" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="370" y="260" width="310" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- TitleClassifier.py -->
+        <mxCell id="ftc" value="recommenders/TitleClassifier.py&#xa;─────────────&#xa;- _index: Dict[str, dict]&#xa;─────────────&#xa;+ classify(titles) → List[dict]&#xa;+ resolve_ids(titles) → (List[int], List[str])&#xa;+ format_recommendation(movie, score, reason, src) → dict" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="370" y="450" width="330" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- ContentBasedRecommender.py -->
+        <mxCell id="fcb" value="recommenders/ContentBasedRecommender.py&#xa;─────────────&#xa;- _matrix: sparse TF-IDF matrix&#xa;- _tfidf: TfidfVectorizer&#xa;─────────────&#xa;+ recommend(watched_ids, top_k) → List[dict]&#xa;&#xa;Algorithms: TF-IDF, Cosine Similarity, KNN" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="750" y="40" width="320" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- CollaborativeRecommender.py -->
+        <mxCell id="fcf" value="recommenders/CollaborativeRecommender.py&#xa;─────────────&#xa;- _matrix: np.ndarray (user-item)&#xa;─────────────&#xa;+ recommend(watched_ids, top_k) → List[dict]&#xa;- _svd_predict(matrix, k) → np.ndarray&#xa;&#xa;Algorithms: User-User Cosine, Item-Item Cosine, SVD" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="750" y="220" width="330" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- HybridRecommender.py -->
+        <mxCell id="fhy" value="recommenders/HybridRecommender.py&#xa;─────────────&#xa;- _cw: float (content_weight=0.5)&#xa;─────────────&#xa;+ recommend(content, collab, top_k) → List[dict]&#xa;&#xa;Blends: weighted average of two score vectors" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="750" y="410" width="310" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- SequentialRecommender.py -->
+        <mxCell id="fsq" value="recommenders/SequentialRecommender.py&#xa;─────────────&#xa;- _transitions: Dict[int, Dict[int, int]]&#xa;─────────────&#xa;+ recommend(watched_ids, top_k) → List[dict]&#xa;&#xa;Algorithm: Markov Chain transition probabilities" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="750" y="580" width="310" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- RecommendationPipeline.py -->
+        <mxCell id="frp" value="recommenders/RecommendationPipeline.py&#xa;─────────────&#xa;- _classifier, _content, _collab,&#xa;  _hybrid, _sequential&#xa;─────────────&#xa;+ run(watched_titles) → Dict&#xa;- _build_retrieval_context(titles) → List[dict]" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=10;align=left;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="300" width="300" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- Pipeline connections -->
+        <mxCell id="ep1" style="dashed=1;" edge="1" source="frp" target="ftc" parent="1"/>
+        <mxCell id="ep2" style="dashed=1;" edge="1" source="frp" target="fcb" parent="1"/>
+        <mxCell id="ep3" style="dashed=1;" edge="1" source="frp" target="fcf" parent="1"/>
+        <mxCell id="ep4" style="dashed=1;" edge="1" source="frp" target="fhy" parent="1"/>
+        <mxCell id="ep5" style="dashed=1;" edge="1" source="frp" target="fsq" parent="1"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

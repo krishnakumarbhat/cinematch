@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" modified="2026-04-01T00:00:00.000Z" agent="CineMatch" version="24.0.0" type="device">
+  <diagram id="flow" name="Execution Flow">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 00_main.py -->
+        <mxCell id="n1" value="00_main.py&#xa;Entry Point" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="640" y="40" width="200" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- 01_AppFactory -->
+        <mxCell id="n2" value="01_AppFactory.py&#xa;create_app()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n1" target="n2" parent="1"/>
+
+        <!-- Database.init -->
+        <mxCell id="n3" value="Database.py&#xa;Singleton init()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="140" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n2" target="n3" parent="1"/>
+
+        <!-- 02_Routes -->
+        <mxCell id="n4" value="02_Routes.py&#xa;register_routes()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="640" y="240" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n2" target="n4" parent="1"/>
+
+        <!-- 03_AuthMiddleware -->
+        <mxCell id="n5" value="03_AuthMiddleware.py&#xa;resolve_user()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="340" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n4" target="n5" parent="1"/>
+
+        <!-- POST /api/recommend -->
+        <mxCell id="n6" value="POST /api/recommend" style="shape=hexagon;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="630" y="340" width="220" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n4" target="n6" parent="1"/>
+
+        <!-- RecommendationPipeline -->
+        <mxCell id="n7" value="RecommendationPipeline.py&#xa;run()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="630" y="450" width="220" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n6" target="n7" parent="1"/>
+
+        <!-- TitleClassifier -->
+        <mxCell id="n8" value="TitleClassifier&#xa;classify() + resolve_ids()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="300" y="560" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n7" target="n8" parent="1"/>
+
+        <!-- ContentBased -->
+        <mxCell id="n9" value="ContentBased&#xa;TF-IDF + Cosine + KNN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="510" y="560" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n7" target="n9" parent="1"/>
+
+        <!-- Collaborative -->
+        <mxCell id="n10" value="Collaborative&#xa;User-User + Item-Item + SVD" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="720" y="560" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n7" target="n10" parent="1"/>
+
+        <!-- Sequential -->
+        <mxCell id="n11" value="Sequential&#xa;Markov Chain" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="940" y="560" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n7" target="n11" parent="1"/>
+
+        <!-- Hybrid -->
+        <mxCell id="n12" value="HybridRecommender&#xa;Weighted Ensemble" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="610" y="670" width="180" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n9" target="n12" parent="1"/>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n10" target="n12" parent="1"/>
+
+        <!-- Response -->
+        <mxCell id="n13" value="JSON Response&#xa;→ Frontend" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="620" y="780" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="n12" target="n13" parent="1"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

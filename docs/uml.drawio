@@ -1,0 +1,65 @@
+<mxfile host="app.diagrams.net" modified="2026-04-01T00:00:00.000Z" agent="CineMatch" version="24.0.0" type="device">
+  <diagram id="uml" name="UML Class Diagram">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Database -->
+        <mxCell id="cls_db" value="&lt;b&gt;Database&lt;/b&gt;&#xa;«Singleton»&#xa;──────────────────&#xa;- _instance: Database&#xa;- _initialized: bool&#xa;──────────────────&#xa;+ init(): void&#xa;+ register_user(username, password): dict&#xa;+ login_user(username, password): dict&#xa;+ get_user_by_token(token): dict | None&#xa;+ log_recommendation(user_id, titles): void" style="shape=mxgraph.basic.rect;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="300" height="200" as="geometry"/>
+        </mxCell>
+
+        <!-- MovieDataset -->
+        <mxCell id="cls_md" value="&lt;b&gt;MovieDataset&lt;/b&gt;&#xa;──────────────────&#xa;+ MOVIES: List[dict]&#xa;+ USER_INTERACTIONS: Dict&#xa;+ USER_SEQUENCES: List[List[int]]&#xa;──────────────────&#xa;+ get_movie_map(): Dict[int, dict]&#xa;+ get_title_index(): Dict[str, dict]" style="shape=mxgraph.basic.rect;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="300" height="170" as="geometry"/>
+        </mxCell>
+
+        <!-- TitleClassifier -->
+        <mxCell id="cls_tc" value="&lt;b&gt;TitleClassifier&lt;/b&gt;&#xa;──────────────────&#xa;- _index: Dict[str, dict]&#xa;──────────────────&#xa;+ classify(titles): List[dict]&#xa;+ resolve_ids(titles): Tuple&#xa;+ format_recommendation(...): dict" style="shape=mxgraph.basic.rect;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="40" width="300" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- ContentBasedRecommender -->
+        <mxCell id="cls_cb" value="&lt;b&gt;ContentBasedRecommender&lt;/b&gt;&#xa;──────────────────&#xa;- _movies, _tfidf, _matrix&#xa;──────────────────&#xa;+ recommend(watched_ids, top_k): List[dict]&#xa;- _build_corpus(): List[str]" style="shape=mxgraph.basic.rect;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="300" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- CollaborativeRecommender -->
+        <mxCell id="cls_cf" value="&lt;b&gt;CollaborativeRecommender&lt;/b&gt;&#xa;──────────────────&#xa;- _movies, _matrix, _movie_idx&#xa;──────────────────&#xa;+ recommend(watched_ids, top_k): List[dict]&#xa;- _svd_predict(matrix, k): ndarray" style="shape=mxgraph.basic.rect;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="320" width="300" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- HybridRecommender -->
+        <mxCell id="cls_hy" value="&lt;b&gt;HybridRecommender&lt;/b&gt;&#xa;──────────────────&#xa;- _cw: float&#xa;──────────────────&#xa;+ recommend(content, collab, top_k): List[dict]" style="shape=mxgraph.basic.rect;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="760" y="320" width="300" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- SequentialRecommender -->
+        <mxCell id="cls_sq" value="&lt;b&gt;SequentialRecommender&lt;/b&gt;&#xa;──────────────────&#xa;- _transitions: Dict&#xa;──────────────────&#xa;+ recommend(watched_ids, top_k): List[dict]&#xa;- _build_transitions(): Dict" style="shape=mxgraph.basic.rect;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="300" height="130" as="geometry"/>
+        </mxCell>
+
+        <!-- RecommendationPipeline -->
+        <mxCell id="cls_rp" value="&lt;b&gt;RecommendationPipeline&lt;/b&gt;&#xa;──────────────────&#xa;- _classifier: TitleClassifier&#xa;- _content: ContentBasedRecommender&#xa;- _collab: CollaborativeRecommender&#xa;- _hybrid: HybridRecommender&#xa;- _sequential: SequentialRecommender&#xa;──────────────────&#xa;+ run(watched_titles): Dict&#xa;- _build_retrieval_context(titles): List" style="shape=mxgraph.basic.rect;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;whiteSpace=wrap;html=1;rounded=0;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="500" width="300" height="190" as="geometry"/>
+        </mxCell>
+
+        <!-- Relationships: Pipeline uses each recommender -->
+        <mxCell id="r1" value="uses" style="endArrow=open;endSize=12;dashed=1;" edge="1" source="cls_rp" target="cls_tc" parent="1"/>
+        <mxCell id="r2" value="uses" style="endArrow=open;endSize=12;dashed=1;" edge="1" source="cls_rp" target="cls_cb" parent="1"/>
+        <mxCell id="r3" value="uses" style="endArrow=open;endSize=12;dashed=1;" edge="1" source="cls_rp" target="cls_cf" parent="1"/>
+        <mxCell id="r4" value="uses" style="endArrow=open;endSize=12;dashed=1;" edge="1" source="cls_rp" target="cls_hy" parent="1"/>
+        <mxCell id="r5" value="uses" style="endArrow=open;endSize=12;dashed=1;" edge="1" source="cls_rp" target="cls_sq" parent="1"/>
+
+        <!-- TitleClassifier depends on MovieDataset -->
+        <mxCell id="r6" value="depends" style="endArrow=open;endSize=12;dashed=1;" edge="1" source="cls_tc" target="cls_md" parent="1"/>
+
+        <!-- All recommenders depend on MovieDataset -->
+        <mxCell id="r7" value="" style="endArrow=open;endSize=8;dashed=1;strokeColor=#999999;" edge="1" source="cls_cb" target="cls_md" parent="1"/>
+        <mxCell id="r8" value="" style="endArrow=open;endSize=8;dashed=1;strokeColor=#999999;" edge="1" source="cls_cf" target="cls_md" parent="1"/>
+        <mxCell id="r9" value="" style="endArrow=open;endSize=8;dashed=1;strokeColor=#999999;" edge="1" source="cls_sq" target="cls_md" parent="1"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

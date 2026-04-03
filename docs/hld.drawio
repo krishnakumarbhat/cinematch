@@ -1,0 +1,81 @@
+<mxfile host="app.diagrams.net" modified="2026-04-01T00:00:00.000Z" agent="CineMatch" version="24.0.0" type="device">
+  <diagram id="hld" name="High-Level Design">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Client Layer -->
+        <mxCell id="g1" value="Client Layer" style="swimlane;startSize=25;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="100" y="40" width="400" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="React Frontend&#xa;(Vite + TailwindCSS)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;" vertex="1" parent="g1">
+          <mxGeometry x="20" y="40" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="Components&#xa;InputArea, Cards, List" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="g1">
+          <mxGeometry x="210" y="40" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="API Service&#xa;(fetch → /api/*)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="g1">
+          <mxGeometry x="110" y="110" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- API Layer -->
+        <mxCell id="g2" value="API Layer (Flask)" style="swimlane;startSize=25;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="100" y="260" width="400" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="a1" value="AppFactory&#xa;(Factory Pattern)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="g2">
+          <mxGeometry x="20" y="40" width="160" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a2" value="Routes&#xa;/api/auth/* , /api/recommend" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="g2">
+          <mxGeometry x="210" y="40" width="170" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="a3" value="AuthMiddleware&#xa;Token Extraction" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="g2">
+          <mxGeometry x="110" y="110" width="170" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ML Engine Layer -->
+        <mxCell id="g3" value="ML Engine Layer" style="swimlane;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="560" y="260" width="500" height="250" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1" value="RecommendationPipeline&#xa;(Orchestrator)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=11;" vertex="1" parent="g3">
+          <mxGeometry x="160" y="35" width="190" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m2" value="Content-Based&#xa;TF-IDF+Cosine+KNN" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="g3">
+          <mxGeometry x="20" y="110" width="140" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m3" value="Collaborative&#xa;UU+II+SVD" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="g3">
+          <mxGeometry x="180" y="110" width="130" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4" value="Sequential&#xa;Markov" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="g3">
+          <mxGeometry x="330" y="110" width="130" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m5" value="Hybrid Ensemble&#xa;50/50 Blend" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;" vertex="1" parent="g3">
+          <mxGeometry x="130" y="185" width="150" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Data Layer -->
+        <mxCell id="g4" value="Data Layer" style="swimlane;startSize=25;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="560" y="560" width="500" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="d1" value="SQLite DB&#xa;(users, sessions)" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=11;size=10;" vertex="1" parent="g4">
+          <mxGeometry x="30" y="35" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="d2" value="MovieDataset&#xa;(static catalog)" style="shape=cylinder3;whiteSpace=wrap;html=1;fontSize=11;size=10;" vertex="1" parent="g4">
+          <mxGeometry x="200" y="35" width="140" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="d3" value="TitleClassifier&#xa;(O(1) lookup)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;" vertex="1" parent="g4">
+          <mxGeometry x="370" y="40" width="120" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections between layers -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="c3" target="a2" parent="1"/>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;strokeWidth=2;" edge="1" source="a2" target="m1" parent="1"/>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="m1" target="m2" parent="1"/>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="m1" target="m3" parent="1"/>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="m1" target="m4" parent="1"/>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="m2" target="m5" parent="1"/>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="m3" target="m5" parent="1"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
